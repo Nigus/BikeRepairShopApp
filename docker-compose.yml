@@ -1,0 +1,39 @@
+services:
+  bikerepairshop.api:
+    build:
+      context: ./BikeRepairShop.API
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+    networks:
+      - bikerepairshop-network
+    environment:
+        ConnectionStrings__BookingConnection: "Server=bikerepairshop-sqlserver;Database=bikeRepairDb;User=sa;Password=DontSecret!;Encrypt=False;"
+        ASPNETCORE_ENVIRONMENT: Development
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - bikerepairshop.api
+    networks:
+      - bikerepairshop-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: bikerepairshop-sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "DontSecret!"
+      ACCEPT_EULA: "Y"
+    networks:
+      - bikerepairshop-network
+
+networks:
+  bikerepairshop-network:
+    driver: bridge

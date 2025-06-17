@@ -1,0 +1,17 @@
+﻿using BikeRepairShop.API.Helpers;
+
+namespace BikeRepairShop.API.Models
+{
+    public class Booking
+    {
+        public int Id { get; set; }
+
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+        public DateTime BookingDate { get; set; }
+        public DateTime ExpectedDueDate { get; set; }
+        public string? Notes { get; set; }
+        public ICollection<RepairOrder> RepairOrders { get; set; } = new List<RepairOrder>();
+    }
+}
