@@ -47,7 +47,7 @@ namespace BikeRepairShop.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("BikeBrand");
                 });
 
             modelBuilder.Entity("BikeRepairShop.API.Models.Booking", b =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeRepairShop.API.Migrations
 {
     [DbContext(typeof(CustomDbContext))]
-    [Migration("20250617131746_UpdateCustomerAndBookingSchema")]
-    partial class UpdateCustomerAndBookingSchema
+    [Migration("20250618094509_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace BikeRepairShop.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("BikeBrand");
                 });
 
             modelBuilder.Entity("BikeRepairShop.API.Models.Booking", b =>
@@ -61,7 +61,7 @@ namespace BikeRepairShop.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BikeBrandId")
+                    b.Property<int?>("BikeBrandId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BookingDate")
@@ -75,9 +75,6 @@ namespace BikeRepairShop.API.Migrations
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ServiceType")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -120,13 +117,40 @@ namespace BikeRepairShop.API.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("BikeRepairShop.API.Models.RepairOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BikeBrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BikeBrandId");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("RepairOrders");
+                });
+
             modelBuilder.Entity("BikeRepairShop.API.Models.Booking", b =>
                 {
-                    b.HasOne("BikeRepairShop.API.Models.BikeBrand", "BikeBrand")
+                    b.HasOne("BikeRepairShop.API.Models.BikeBrand", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("BikeBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BikeBrandId");
 
                     b.HasOne("BikeRepairShop.API.Models.Customer", "Customer")
                         .WithMany("Bookings")
@@ -134,14 +158,36 @@ namespace BikeRepairShop.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("BikeRepairShop.API.Models.RepairOrder", b =>
+                {
+                    b.HasOne("BikeRepairShop.API.Models.BikeBrand", "BikeBrand")
+                        .WithMany()
+                        .HasForeignKey("BikeBrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BikeRepairShop.API.Models.Booking", "Booking")
+                        .WithMany("RepairOrders")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("BikeBrand");
 
-                    b.Navigation("Customer");
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("BikeRepairShop.API.Models.BikeBrand", b =>
                 {
                     b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("BikeRepairShop.API.Models.Booking", b =>
+                {
+                    b.Navigation("RepairOrders");
                 });
 
             modelBuilder.Entity("BikeRepairShop.API.Models.Customer", b =>

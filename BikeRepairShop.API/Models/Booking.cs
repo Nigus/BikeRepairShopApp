@@ -1,4 +1,5 @@
 ﻿using BikeRepairShop.API.Helpers;
+using System.Text.Json.Serialization;
 
 namespace BikeRepairShop.API.Models
 {
@@ -12,6 +13,7 @@ namespace BikeRepairShop.API.Models
         public DateTime BookingDate { get; set; }
         public DateTime ExpectedDueDate { get; set; }
         public string? Notes { get; set; }
+        [JsonIgnore]
         public ICollection<RepairOrder> RepairOrders { get; set; } = new List<RepairOrder>();
     }
 }

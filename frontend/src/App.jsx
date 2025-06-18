@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/home';
+import NewBooking from './pages/booking';
+import BookingEditFormWrapper from './components/BookingEditFormWrapper';
+
 
 function App() {
-    const [customers, setCustomers] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/customers')
-            .then(response => setCustomers(response.data));
-    }, []);
-
     return (
-        <div>
-            <h1>Bike Repair Shop - Customers</h1>
-            <ul>
-                {customers.map(c => (
-                    <li key={c.id}>{c.name} - {c.phone}</li>
-                ))}
-            </ul>
-        </div>
+      <div>
+        <nav>
+          <Link to="/">Orders</Link> | <Link to="/book">New Booking</Link>
+        </nav>
+  
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/book" element={<NewBooking />} />
+          {/* Add edit route with bookingId param */}
+          <Route path="/edit/:bookingId" element={<BookingEditFormWrapper />} />
+        </Routes>
+      </div>
     );
-}
+  }
 
 export default App;

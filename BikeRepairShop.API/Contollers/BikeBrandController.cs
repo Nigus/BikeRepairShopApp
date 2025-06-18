@@ -1,5 +1,6 @@
 ﻿using BikeRepairShop.API.Contexts;
 using BikeRepairShop.API.Models;
+using BikeRepairShop.API.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BikeRepairShop.API.Contollers
@@ -32,7 +33,7 @@ namespace BikeRepairShop.API.Contollers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBikeBrand([FromBody] BikeBrand bikeBrand)
+        public async Task<IActionResult> AddBikeBrand([FromBody] BikeBrandDto bikeBrand)
         {
             try
             {

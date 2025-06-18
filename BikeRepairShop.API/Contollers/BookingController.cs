@@ -1,5 +1,6 @@
 ﻿using BikeRepairShop.API.Contexts;
 using BikeRepairShop.API.Models;
+using BikeRepairShop.API.Models.Dtos;
 using BikeRepairShop.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,8 +18,9 @@ namespace BikeRepairShop.API.Contollers
             _bookingService = bookingService;
             _logger = logger;
         }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBooking(int id)
+        public async Task<IActionResult> GetBookingById(int id)
         {
             try
             {
@@ -46,12 +48,12 @@ namespace BikeRepairShop.API.Contollers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBooking([FromBody]Booking booking)
+        public async Task<IActionResult> AddBooking([FromBody] BookingCreateDto bookingDto)
         {
             try
             {
-                await _bookingService.AddBookingAsync(booking);
-                return Ok();
+                await _bookingService.AddBookingAsync(bookingDto);
+                return Ok(nameof(Booking));
             }
             catch(Exception ex)
             {

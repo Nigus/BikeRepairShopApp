@@ -21,6 +21,20 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<CustomerHandler>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<BikeBrandHandler>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
@@ -50,4 +64,6 @@ app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.UseRouting();
+app.UseCors("AllowFrontend");
 app.Run();

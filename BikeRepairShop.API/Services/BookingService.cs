@@ -1,6 +1,7 @@
 ﻿using BikeRepairShop.API.Contexts;
 using BikeRepairShop.API.Helpers;
 using BikeRepairShop.API.Models;
+using BikeRepairShop.API.Models.Dtos;
 
 namespace BikeRepairShop.API.Services
 {
@@ -8,7 +9,7 @@ namespace BikeRepairShop.API.Services
     {
         Task<IEnumerable<Booking>> GetAllBookingsAsync();
         Task<Booking> GetBookingByIdAsync(int id);
-        Task AddBookingAsync(Booking booking);
+        Task AddBookingAsync(BookingCreateDto booking);
         Task UpdateBookingAsync(Booking booking);
         Task DeleteBookingAsync(int id);
     }
@@ -32,7 +33,7 @@ namespace BikeRepairShop.API.Services
             return _bookingHandler.GetBookingAsync(id);
         }
 
-        public Task AddBookingAsync(Booking booking)
+        public Task AddBookingAsync(BookingCreateDto booking)
         {
             if (booking.RepairOrders == null || !booking.RepairOrders.Any())// Atleast there should be one order with service type
             {

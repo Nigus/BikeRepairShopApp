@@ -12,7 +12,7 @@ namespace BikeRepairShop.API.Data
         }
 
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<BikeBrand> Brands { get; set; }
+        public DbSet<BikeBrand> BikeBrand { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<RepairOrder> RepairOrders { get; set; }
 
@@ -41,6 +41,10 @@ namespace BikeRepairShop.API.Data
             modelBuilder.Entity<Customer>()
                 .HasIndex(c => c.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<RepairOrder>()
+                .Property(ro => ro.BikeBrandId)
+                .IsRequired();
         }
     }
 }

@@ -3,6 +3,7 @@ using BikeRepairShop.API.Models;
 
 namespace BikeRepairShop.API.Contexts
 {
+    using BikeRepairShop.API.Models.Dtos;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     public class BookingHandler
@@ -27,8 +28,27 @@ namespace BikeRepairShop.API.Contexts
             return await _customDbContext.Bookings.ToListAsync(); 
         }
 
-        public async Task AddBookingAsync(Booking booking)
+        public async Task AddBookingAsync(BookingCreateDto bookingDto)
         {
+            if (bookingDto.RepairOrders == null || !bookingDto.RepairOrders.Any())
+            {
+                throw new Exception("At least one repair order is required.");
+            }
+            //TODO use automapper
+            var booking = new Booking
+            {
+                CustomerId = bookingDto.CustomerId,
+                BookingDate = bookingDto.BookingDate,
+                ExpectedDueDate = bookingDto.ExpectedDueDate,
+                Notes = bookingDto.Notes,
+                RepairOrders = bookingDto.RepairOrders.Select(ro => new RepairOrder
+                {
+                    BikeBrandId = ro.BikeBrandId,
+                    ServiceType = ro.ServiceType,
+                    CreatedDate = DateTime.UtcNow
+                }).ToList()
+            };
+
             _customDbContext.Bookings.Add(booking);
             await _customDbContext.SaveChangesAsync();
         }

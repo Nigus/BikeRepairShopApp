@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeRepairShop.API.Migrations
 {
     [DbContext(typeof(CustomDbContext))]
-    [Migration("20250617134750_RestructureBookingsToHaveSeparateRepairOrder")]
-    partial class RestructureBookingsToHaveSeparateRepairOrder
+    [Migration("20250618095952_UpdateModels")]
+    partial class UpdateModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace BikeRepairShop.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("BikeBrand");
                 });
 
             modelBuilder.Entity("BikeRepairShop.API.Models.Booking", b =>
