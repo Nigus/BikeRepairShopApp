@@ -6,7 +6,7 @@ on:
       - master
 
 env: 
-  REGISTRY: ghcr.io/nigusgirma
+  REGISTRY: ghcr.io/Nigus
   API_IMAGE: bikerepairshop-api
   FRONTEND_IMAGE: bikerepairshop-api
   IMAGE_TAG: ${{ github.sha }}
