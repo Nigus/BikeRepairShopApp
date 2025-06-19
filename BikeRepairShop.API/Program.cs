@@ -1,5 +1,6 @@
 using BikeRepairShop.API.Contexts;
 using BikeRepairShop.API.Data;
+using BikeRepairShop.API.Helpers;
 using BikeRepairShop.API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +40,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 if (builder.Environment.IsEnvironment("Docker"))
 {
     builder.WebHost.UseUrls("http://+:80");

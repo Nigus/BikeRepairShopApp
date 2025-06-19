@@ -62,11 +62,11 @@ namespace BikeRepairShop.API.Contollers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBooking([FromBody] Booking booking)
+        public async Task<IActionResult> UpdateBooking([FromBody] BookingDto bookingDto)
         {
             try
             {
-                await _bookingService.UpdateBookingAsync(booking);
+                await _bookingService.UpdateBookingAsync(bookingDto);
                 return Ok(nameof(Booking));
             }
             catch(Exception ex)

@@ -1,11 +1,12 @@
 ﻿using BikeRepairShop.API.Contexts;
 using BikeRepairShop.API.Models;
+using BikeRepairShop.API.Models.Dtos;
 
 namespace BikeRepairShop.API.Services
 {
     public interface ICustomerService
     {
-        Task AddCustomer(Customer customer);
+        Task AddCustomer(CustomerDto customer);
         Task<IEnumerable<Customer>> GetAllCustomerAsync();
         Task<Customer> GetCustomerById(int customerId);
     }
@@ -17,9 +18,9 @@ namespace BikeRepairShop.API.Services
             _customerHandler = customerHandler;
         }
 
-        public Task AddCustomer(Customer customer)
+        public Task AddCustomer(CustomerDto customerDto)
         {
-            return _customerHandler.AddCustomer(customer);
+            return _customerHandler.AddCustomer(customerDto);
         }
 
         public Task<IEnumerable<Customer>> GetAllCustomerAsync()

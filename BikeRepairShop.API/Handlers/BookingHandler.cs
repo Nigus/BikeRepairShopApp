@@ -3,16 +3,19 @@ using BikeRepairShop.API.Models;
 
 namespace BikeRepairShop.API.Contexts
 {
+    using AutoMapper;
     using BikeRepairShop.API.Models.Dtos;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     public class BookingHandler
     {
         private readonly CustomDbContext _customDbContext;
+        private readonly IMapper _mapper;
 
-        public BookingHandler(CustomDbContext customDbContext)
+        public BookingHandler(CustomDbContext customDbContext, IMapper mapper)
         {
             _customDbContext = customDbContext;
+            _mapper = mapper;
         }
         public async Task<Booking> GetBookingAsync(int id)
         {
@@ -34,30 +37,25 @@ namespace BikeRepairShop.API.Contexts
             {
                 throw new Exception("At least one repair order is required.");
             }
-            //TODO use automapper
-            var booking = new Booking
+          
+            var booking = _mapper.Map<Booking>(bookingDto);
+
+            foreach(var order in bookingDto.RepairOrders)
             {
-                CustomerId = bookingDto.CustomerId,
-                BookingDate = bookingDto.BookingDate,
-                ExpectedDueDate = bookingDto.ExpectedDueDate,
-                Notes = bookingDto.Notes,
-                RepairOrders = bookingDto.RepairOrders.Select(ro => new RepairOrder
-                {
-                    BikeBrandId = ro.BikeBrandId,
-                    ServiceType = ro.ServiceType,
-                    CreatedDate = DateTime.UtcNow
-                }).ToList()
-            };
+                order.CreatedDate = DateTime.Now;
+            }
 
             _customDbContext.Bookings.Add(booking);
             await _customDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateBookingAsync(Booking booking)
+        public async Task UpdateBookingAsync(BookingDto bookingDto)
         {
-            var _booking = _customDbContext.Bookings.FirstOrDefaultAsync(b => b.Id == booking.Id);
+            var _booking = _customDbContext.Bookings.FirstOrDefaultAsync(b => b.Id == bookingDto.Id);
             if (_booking == null)
                 throw new Exception(nameof(Booking));
+            
+            var booking = _mapper.Map<Booking>(bookingDto);
 
             _customDbContext.Bookings.Update(booking);
             await _customDbContext.SaveChangesAsync();

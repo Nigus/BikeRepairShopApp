@@ -10,7 +10,7 @@ namespace BikeRepairShop.API.Services
         Task<IEnumerable<Booking>> GetAllBookingsAsync();
         Task<Booking> GetBookingByIdAsync(int id);
         Task AddBookingAsync(BookingCreateDto booking);
-        Task UpdateBookingAsync(Booking booking);
+        Task UpdateBookingAsync(BookingDto booking);
         Task DeleteBookingAsync(int id);
     }
 
@@ -48,7 +48,7 @@ namespace BikeRepairShop.API.Services
             return _bookingHandler.AddBookingAsync(booking);
         }
 
-        public Task UpdateBookingAsync(Booking booking)
+        public Task UpdateBookingAsync(BookingDto booking)
         {
             return _bookingHandler.UpdateBookingAsync(booking);
         }

@@ -2,10 +2,12 @@
 
 namespace BikeRepairShop.API.Models.Dtos
 {
-    public class RepairOrderCreateDto
+    public class RepairOrderDto
     {
+        public int Id { get; set; }
         public int BikeBrandId { get; set; }
-        public string BikeBrandName { get; set; } = string.Empty;
+        public int BikeBrandName {  get; set; }
         public ServiceType ServiceType { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

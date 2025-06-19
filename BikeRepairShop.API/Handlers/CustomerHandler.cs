@@ -1,5 +1,7 @@
-﻿using BikeRepairShop.API.Data;
+﻿using AutoMapper;
+using BikeRepairShop.API.Data;
 using BikeRepairShop.API.Models;
+using BikeRepairShop.API.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace BikeRepairShop.API.Contexts
@@ -7,9 +9,11 @@ namespace BikeRepairShop.API.Contexts
     public class CustomerHandler
     {
         private readonly CustomDbContext _customDbContext;
-        public CustomerHandler(CustomDbContext customDbContext)
+        private readonly IMapper _mapper;
+        public CustomerHandler(CustomDbContext customDbContext, IMapper mapper)
         {
             _customDbContext = customDbContext;
+            _mapper = mapper;
         }
 
        public async Task<IEnumerable<Customer>> GetAllCustomerAsync()
@@ -17,8 +21,9 @@ namespace BikeRepairShop.API.Contexts
             return await _customDbContext.Customers.ToListAsync();
        }
 
-        public async Task AddCustomer(Customer customer)
+        public async Task AddCustomer(CustomerDto customerDto)
         {
+            var customer = _mapper.Map<Customer>(customerDto);
             _customDbContext.Add(customer);
             await _customDbContext.SaveChangesAsync();
         }

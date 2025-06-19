@@ -1,4 +1,5 @@
-﻿using BikeRepairShop.API.Data;
+﻿using AutoMapper;
+using BikeRepairShop.API.Data;
 using BikeRepairShop.API.Models;
 using BikeRepairShop.API.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,11 @@ namespace BikeRepairShop.API.Contexts
     public class BikeBrandHandler
     {
         private readonly CustomDbContext _context;
-
-        public BikeBrandHandler(CustomDbContext context)
+        private readonly IMapper _mapper;
+        public BikeBrandHandler(CustomDbContext context, IMapper mapper)
         {
            _context = context; 
+            _mapper = mapper;
         }
 
         public async Task<List<BikeBrand>> BikeBrandsAsync()
@@ -20,13 +22,7 @@ namespace BikeRepairShop.API.Contexts
         }
         public async Task AddBikeBrand(BikeBrandDto dto)
         {
-            var brand = new BikeBrand
-            {
-                BikeName = dto.BikeName,
-                BikeDescription = dto.BikeDescription,
-                Model = dto.Model,
-                BikeType = dto.BikeType,
-            };
+            var brand = _mapper.Map<BikeBrand>(dto);
 
             _context.BikeBrand.Add(brand);
             await _context.SaveChangesAsync();
