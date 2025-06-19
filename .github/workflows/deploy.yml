@@ -1,0 +1,35 @@
+name: Build and Deploy BikeRepairShop to Github container registry
+
+on:
+  push:
+    branches:
+      - master
+
+env: 
+  REGISTRY: ghcr.io/nigusgirma
+  API_IMAGE: bikerepairshop-api
+  FRONTEND_IMAGE: bikerepairshop-api
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v4
+
+
+      - name: Login to Github container registry
+        run: echo "${{ secrets.BIKEREPAIRSHOPGHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build backend
+        run: |
+          docker build -t $REGSTRY/$BACKEND_IMAGE:$IMAGE_TAG -f BikeRepairShop.API/Dockerfile BikeRepairShop.API
+          docker push $REGISTRY/$FRONTEND_IAMGE:$IAMGE_TAG
+      
+      - name: Build frontend
+        run: |
+          docker build -t $REGISTRY/$FRONTEND_IAMGE:$IAMGE_TAG -f frontend/Dockerfile frontend
+          docker push $REGISTRY/$FRONTEND_IAMGE:$IAMGE_TAG
+
