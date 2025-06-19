@@ -6,7 +6,7 @@ namespace BikeRepairShop.API.Services
 {
     public interface ICustomerService
     {
-        Task AddCustomer(CustomerDto customer);
+        Task AddCustomer(CustomerCreateDto customer);
         Task<IEnumerable<Customer>> GetAllCustomerAsync();
         Task<Customer> GetCustomerById(int customerId);
     }
@@ -18,7 +18,7 @@ namespace BikeRepairShop.API.Services
             _customerHandler = customerHandler;
         }
 
-        public Task AddCustomer(CustomerDto customerDto)
+        public Task AddCustomer(CustomerCreateDto customerDto)
         {
             return _customerHandler.AddCustomer(customerDto);
         }

@@ -33,7 +33,7 @@ namespace BikeRepairShop.API.Contollers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBikeBrand([FromBody] BikeBrandDto bikeBrand)
+        public async Task<IActionResult> AddBikeBrand([FromBody] BikeBrandCreateDto bikeBrand)
         {
             try
             {

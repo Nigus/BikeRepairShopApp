@@ -41,6 +41,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 if (builder.Environment.IsEnvironment("Docker"))
 {
     builder.WebHost.UseUrls("http://+:80");

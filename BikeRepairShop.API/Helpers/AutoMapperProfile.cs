@@ -20,7 +20,13 @@ namespace BikeRepairShop.API.Helpers
             CreateMap<RepairOrderDto, RepairOrder>();
 
             CreateMap<RepairOrderCreateDto, RepairOrder>();
-
+            CreateMap<RepairOrder, RepairOrderDto>();
+            CreateMap<BikeBrandDto, BikeBrand>();
+            CreateMap<BikeBrand, BikeBrandDto>();
+            CreateMap<BikeBrandCreateDto, BikeBrand>();
+            CreateMap<CustomerCreateDto, Customer>();
+            CreateMap<CustomerDto, Customer>();
+            CreateMap<Customer, CustomerDto>();
         }
     }
 }

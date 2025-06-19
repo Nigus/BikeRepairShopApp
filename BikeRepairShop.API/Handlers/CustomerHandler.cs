@@ -21,7 +21,7 @@ namespace BikeRepairShop.API.Contexts
             return await _customDbContext.Customers.ToListAsync();
        }
 
-        public async Task AddCustomer(CustomerDto customerDto)
+        public async Task AddCustomer(CustomerCreateDto customerDto)
         {
             var customer = _mapper.Map<Customer>(customerDto);
             _customDbContext.Add(customer);

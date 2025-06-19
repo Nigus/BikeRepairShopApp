@@ -6,6 +6,6 @@
         public DateTime BookingDate { get; set; }
         public DateTime ExpectedDueDate { get; set; }
         public string? Notes { get; set; }
-        public List<RepairOrderCreateDto> RepairOrders { get; set; } = new();
+        public List<RepairOrderDto> RepairOrders { get; set; } = new();
     }
 }

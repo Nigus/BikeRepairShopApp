@@ -20,7 +20,7 @@ namespace BikeRepairShop.API.Contexts
         {
             return await _context.BikeBrand.ToListAsync();
         }
-        public async Task AddBikeBrand(BikeBrandDto dto)
+        public async Task AddBikeBrand(BikeBrandCreateDto dto)
         {
             var brand = _mapper.Map<BikeBrand>(dto);
 

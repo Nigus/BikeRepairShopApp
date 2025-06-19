@@ -1,5 +1,6 @@
 ﻿using BikeRepairShop.API.Contexts;
 using BikeRepairShop.API.Models;
+using BikeRepairShop.API.Models.Dtos;
 using BikeRepairShop.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,12 +47,12 @@ namespace BikeRepairShop.API.Contollers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AddCusomter([FromBody] Customer customer)
+        public async Task<IActionResult> AddCusomter([FromBody] CustomerCreateDto customerDto)
         {
             try
             {
-                await _customerService.AddCustomer(customer);
-                return Ok(customer);
+                await _customerService.AddCustomer(customerDto);
+                return Ok(customerDto);
             }
             catch(Exception ex)
             {
