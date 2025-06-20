@@ -7,14 +7,14 @@ namespace BikeRepairShop.API.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Booking, BookingDto>()
+            CreateMap<BikeRepairBooking, BikeRepairBookingDto>()
                 .ForMember(book => book.RepairOrders, opt => opt.MapFrom(src => src.RepairOrders));
 
-            CreateMap<BookingDto, Booking>()
+            CreateMap<BikeRepairBookingDto, BikeRepairBooking>()
                 .ForMember(book => book.RepairOrders, opt => opt.Ignore());
 
 
-            CreateMap<BookingCreateDto, Booking>()
+            CreateMap<BikeRepairBookingCreateDto, BikeRepairBooking>()
                 .ForMember(book => book.RepairOrders, opt => opt.MapFrom(src => src.RepairOrders));
 
             CreateMap<RepairOrderDto, RepairOrder>();

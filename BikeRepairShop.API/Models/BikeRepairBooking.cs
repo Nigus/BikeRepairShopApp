@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace BikeRepairShop.API.Models
 {
-    public class Booking
+    public class BikeRepairBooking
     {
         public int Id { get; set; }
 

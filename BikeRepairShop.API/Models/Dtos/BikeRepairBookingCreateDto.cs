@@ -1,6 +1,6 @@
 ﻿namespace BikeRepairShop.API.Models.Dtos
 {
-    public class BookingCreateDto
+    public class BikeRepairBookingCreateDto
     {
         public int CustomerId { get; set; }
         public DateTime BookingDate { get; set; }

@@ -6,7 +6,7 @@ namespace BikeRepairShop.API.Models
     {
         public int Id { get; set; }
         public int BookingId { get; set; }
-        public Booking Booking { get; set; }
+        public BikeRepairBooking Booking { get; set; }
 
         public int BikeBrandId { get; set; }
         public BikeBrand BikeBrand { get; set; }

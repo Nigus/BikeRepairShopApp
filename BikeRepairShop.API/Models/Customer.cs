@@ -10,6 +10,6 @@ namespace BikeRepairShop.API.Models
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public ICollection<BikeRepairBooking> Bookings { get; set; } = new List<BikeRepairBooking>();
     }
 }

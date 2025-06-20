@@ -5,35 +5,26 @@ using BikeRepairShop.API.Models.Dtos;
 
 namespace BikeRepairShop.API.Services
 {
-    public interface IBookingService
-    {
-        Task<IEnumerable<Booking>> GetAllBookingsAsync();
-        Task<Booking> GetBookingByIdAsync(int id);
-        Task AddBookingAsync(BookingCreateDto booking);
-        Task UpdateBookingAsync(BookingDto booking);
-        Task DeleteBookingAsync(int id);
-    }
-
-    public class BookingService : IBookingService
+    public class BikeRepairBookingService : IBikeRepairBookingService
     {
         private readonly BookingHandler _bookingHandler;
 
-        public BookingService(BookingHandler bookingHandler)
+        public BikeRepairBookingService(BookingHandler bookingHandler)
         {
             _bookingHandler = bookingHandler;
         }
 
-        public Task<IEnumerable<Booking>> GetAllBookingsAsync()
+        public Task<IEnumerable<BikeRepairBooking>> GetAllBookingsAsync()
         {
             return _bookingHandler.GetAllBookingsAsync();
         }
 
-        public Task<Booking> GetBookingByIdAsync(int id)
+        public Task<BikeRepairBooking> GetBookingByIdAsync(int id)
         {
             return _bookingHandler.GetBookingAsync(id);
         }
 
-        public Task AddBookingAsync(BookingCreateDto booking)
+        public Task AddBookingAsync(BikeRepairBookingCreateDto booking)
         {
             if (booking.RepairOrders == null || !booking.RepairOrders.Any())// Atleast there should be one order with service type
             {
@@ -48,7 +39,7 @@ namespace BikeRepairShop.API.Services
             return _bookingHandler.AddBookingAsync(booking);
         }
 
-        public Task UpdateBookingAsync(BookingDto booking)
+        public Task UpdateBookingAsync(BikeRepairBookingDto booking)
         {
             return _bookingHandler.UpdateBookingAsync(booking);
         }

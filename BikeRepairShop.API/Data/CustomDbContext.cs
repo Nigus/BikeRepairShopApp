@@ -13,14 +13,14 @@ namespace BikeRepairShop.API.Data
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<BikeBrand> BikeBrand { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BikeRepairBooking> Bookings { get; set; }
         public DbSet<RepairOrder> RepairOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Booking>()
+            modelBuilder.Entity<BikeRepairBooking>()
                 .HasOne(b => b.Customer)
                 .WithMany(c => c.Bookings)
                 .HasForeignKey(b => b.CustomerId)

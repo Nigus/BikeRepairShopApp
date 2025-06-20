@@ -9,6 +9,6 @@ namespace BikeRepairShop.API.Models
         public string Model { get; set; }
         public string BikeDescription { get; set; } = string.Empty;
         public BikeType BikeType { get; set; }
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public ICollection<BikeRepairBooking> Bookings { get; set; } = new List<BikeRepairBooking>();
     }
 }

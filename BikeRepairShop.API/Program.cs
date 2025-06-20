@@ -19,7 +19,7 @@ builder.Services.AddDbContext<CustomDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<BookingHandler>();
-builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBikeRepairBookingService, BikeRepairBookingService>();
 builder.Services.AddScoped<CustomerHandler>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<BikeBrandHandler>();
@@ -42,7 +42,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 if (builder.Environment.IsEnvironment("Docker"))
 {
@@ -72,10 +71,11 @@ app.UseRouting();
 app.UseCors("AllowFrontend");
 
 // Usage of minimal api for booking instead of controller :) 
+//TODO do for othe controllers as well
 
 var bookings = app.MapGroup("/api/bookings").WithTags("bookings");
 
-bookings.MapGet("/{id:int}", async (int id, IBookingService bookingService, ILoggerFactory loggerFactory) =>
+bookings.MapGet("/{id:int}", async (int id, IBikeRepairBookingService bookingService, ILoggerFactory loggerFactory) =>
 {
     var loggger = loggerFactory.CreateLogger(nameof(bookingService));
     try
@@ -92,7 +92,7 @@ bookings.MapGet("/{id:int}", async (int id, IBookingService bookingService, ILog
     }
 });
 
-bookings.MapGet("/", async (IBookingService bookingService, ILoggerFactory loggerFactory) =>
+bookings.MapGet("/", async (IBikeRepairBookingService bookingService, ILoggerFactory loggerFactory) =>
 {
     var logger = loggerFactory.CreateLogger(nameof(bookingService));
     try
@@ -108,9 +108,9 @@ bookings.MapGet("/", async (IBookingService bookingService, ILoggerFactory logge
     }
 });
 
-bookings.MapPost("/", async (BookingCreateDto bookingCreateDto,IBookingService bookingService, ILoggerFactory loggerFactory) =>
+bookings.MapPost("/", async (BikeRepairBookingCreateDto bookingCreateDto,IBikeRepairBookingService bookingService, ILoggerFactory loggerFactory) =>
 {
-    var logger = loggerFactory.CreateLogger(nameof(BookingService));
+    var logger = loggerFactory.CreateLogger(nameof(BikeRepairBookingService));
 
     try
     {
@@ -125,9 +125,9 @@ bookings.MapPost("/", async (BookingCreateDto bookingCreateDto,IBookingService b
     }
 });
 
-app.MapPut("/", async (BookingDto bookingDto, IBookingService bookingService, ILoggerFactory loggerFactory) =>
+app.MapPut("/", async (BikeRepairBookingDto bookingDto, IBikeRepairBookingService bookingService, ILoggerFactory loggerFactory) =>
 {
-    var logger = loggerFactory.CreateLogger(typeof(BookingService));
+    var logger = loggerFactory.CreateLogger(typeof(BikeRepairBookingService));
     try
     {
         logger.LogInformation("updating booking");
@@ -142,7 +142,7 @@ app.MapPut("/", async (BookingDto bookingDto, IBookingService bookingService, IL
     }
 });
 
-app.MapDelete("/{id:int}", async (int id, IBookingService bookingService, ILoggerFactory loggerFactory) =>
+app.MapDelete("/{id:int}", async (int id, IBikeRepairBookingService bookingService, ILoggerFactory loggerFactory) =>
 {
     var logger = loggerFactory.CreateLogger("nameof(booking)");
     try
